@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panda Projet — AI-Powered Simulation Platforms</title>
+<meta name="description" content="Stop Lecturing. Start Doing. AI-powered professional simulation platforms closing the gap between the classroom and the real world.">
+<meta property="og:title" content="Panda Projet — Stop Lecturing. Start Doing.">
+<meta property="og:description" content="AI-powered simulation platforms closing the gap between the classroom and the real world.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f1a2e;
+    --copper: #c5956b;
+    --copper-light: #dbb48e;
+    --gold: #d4a857;
+    --text-primary: #e8e0d4;
+    --text-muted: #8a9ab5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: var(--navy);
+    font-family: 'Source Sans 3', sans-serif;
+  }
+
+  .reveal-viewport { background: var(--navy) !important; }
+
+  .reveal {
+    font-family: 'Source Sans 3', sans-serif;
+    color: var(--text-primary);
+  }
+
+  /* Each slide is the original image as background */
+  .reveal .slides section {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100%;
+    height: 100%;
+  }
+
+  .slide-bg {
+    position: absolute;
+    inset: 0;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: var(--navy);
+  }
+
+  /* Subtle vignette for polish */
+  .slide-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(15,26,46,0.35) 100%);
+    pointer-events: none;
+  }
+
+  /* Interactive hotspot overlays */
+  .hotspot-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hotspot {
+    position: absolute;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  /* Clickable URL badges */
+  .url-badge {
+    position: absolute;
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--copper-light);
+    background: rgba(15,26,46,0.85);
+    border: 1px solid rgba(197,149,107,0.4);
+    border-radius: 20px;
+    padding: 5px 14px;
+    backdrop-filter: blur(8px);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    z-index: 3;
+    white-space: nowrap;
+  }
+
+  .url-badge:hover {
+    background: rgba(197,149,107,0.2);
+    border-color: var(--copper);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(197,149,107,0.2);
+    color: var(--gold);
+  }
+
+  .url-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--copper);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  /* Pulsing indicator for live platforms */
+  .live-pulse {
+    position: absolute;
+    pointer-events: none;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #4ade80;
+    z-index: 3;
+  }
+
+  .live-pulse::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid #4ade80;
+    animation: live-ring 1.5s ease-out infinite;
+  }
+
+  @keyframes live-ring {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  /* Bottom copper accent bar */
+  .copper-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--copper), var(--gold), var(--copper));
+    z-index: 4;
+  }
+
+  /* Slide number styling */
+  .reveal .slide-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: rgba(197,149,107,0.6);
+    background: rgba(15,26,46,0.7);
+    padding: 4px 10px;
+    border-radius: 4px;
+    right: 12px;
+    bottom: 12px;
+  }
+
+  /* Progress bar */
+  .reveal .progress span {
+    background: linear-gradient(90deg, var(--copper), var(--gold)) !important;
+  }
+
+  /* Controls */
+  .reveal .controls button {
+    color: var(--copper) !important;
+  }
+
+  /* Tooltip for hotspots */
+  .tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(15,26,46,0.95);
+    border: 1px solid rgba(197,149,107,0.5);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    color: var(--text-primary);
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.25s ease;
+    max-width: 200px;
+    line-height: 1.4;
+    backdrop-filter: blur(12px);
+  }
+
+  .hotspot:hover + .tooltip,
+  .hotspot:hover .tooltip {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Animated glow ring for "Powered by Claude AI" */
+  .glow-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(197,149,107,0.3);
+    animation: glow-rotate 4s linear infinite;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  @keyframes glow-rotate {
+    0% { border-color: rgba(197,149,107,0.2); box-shadow: 0 0 10px rgba(197,149,107,0.1); }
+    50% { border-color: rgba(197,149,107,0.5); box-shadow: 0 0 25px rgba(197,149,107,0.2); }
+    100% { border-color: rgba(197,149,107,0.2); box-shadow: 0 0 10px rgba(197,149,107,0.1); }
+  }
+
+  /* Responsive fallback */
+  @media (max-width: 768px) {
+    .url-badge { font-size: 9px; padding: 3px 10px; }
+    .slide-bg { background-size: cover; }
+  }
+
+  /* Loading screen */
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+  }
+
+  #loader.hidden { opacity: 0; pointer-events: none; }
+
+  #loader .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  #loader .bar-track {
+    width: 200px; height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  #loader .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--copper), var(--gold));
+    border-radius: 3px;
+    animation: load-bar 1.5s ease-out forwards;
+  }
+
+  @keyframes load-bar {
+    0% { width: 0; }
+    100% { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Loading screen -->
+<div id="loader">
+  <div class="logo">🐼 PANDA PROJET</div>
+  <div class="bar-track"><div class="bar-fill"></div></div>
+</div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ===== SLIDE 1: TITLE ===== -->
+<section>
+  <div class="slide-bg" style="background-image: url('images/slide-1.jpg');"></div>
+  <div class="hotspot-layer">
+    <a class="url-badge" href="https://pandaprojet.com" target="_blank" style="bottom:18px; left:30px;">
+      <span class="dot"></span> pandaprojet.com
+    </a>
+  </div>
+  <div class="copper-bar"></div>
+</section>
+
+<!-- ===== SLIDE 2: THE PROBLEM ===== -->
+<section>
+  <div class="slide-bg" style="background-image: url('images/slide-2.jpg');"></div>
+  <div class="copper-bar"></div>
+</section>
+
+<!-- ===== SLIDE 3: HOW IT WORKS ===== -->
+<section>
+  <div class="slide-bg" style="background-image: url('images/slide-3.jpg');"></div>
+  <div class="hotspot-layer">
+    <!-- Glow ring around "Powered by Claude AI" center element -->
+    <div class="glow-ring" style="width:130px; height:130px; top:50%; left:50%; transform:translate(-50%,-46%);"></div>
+  </div>
+  <div class="copper-bar"></div>
+</section>
+
+<!-- ===== SLIDE 4: 5 ARENAS ===== -->
+<section>
+  <div class="slide-bg" style="background-image: url('images/slide-4.jpg');"></div>
+  <div class="hotspot-layer">
+    <!-- Live URL badges for each platform -->
+    <a class="url-badge" href="https://bizsimlive.com" target="_blank" style="top:28%; left:5.5%;">
+      <span class="dot"></span> bizsimlive.com
+    </a>
+    <a class="url-badge" href="https://marketsimlive.com" target="_blank" style="top:28%; left:38%;">
+      <span class="dot"></span> marketsimlive.com
+    </a>
+    <a class="url-badge" href="https://negotiatesim.com" target="_blank" style="top:28%; left:72%;">
+      <span class="dot"></span> negotiatesim.com
+    </a>
+    <a class="url-badge" href="https://philosim.app" target="_blank" style="top:59%; left:18%;">
+      <span class="dot"></span> philosim.app
+    </a>
+    <a class="url-badge" href="https://claudesim.app" target="_blank" style="top:59%; left:53%;">
+      <span class="dot"></span> claudesim.app
+    </a>
+  </div>
+  <div class="copper-bar"></div>
+</section>
+
+<!-- ===== SLIDE 5: COMPARISON TABLE ===== -->
+<section>
+  <div class="slide-bg" style="background-image: url('images/slide-5.jpg');"></div>
+  <div class="copper-bar"></div>
+</section>
+
+<!-- ===== SLIDE 6: REVENUE PILLARS ===== -->
+<section>
+  <div class="slide-bg" style="background-image: url('images/slide-6.jpg');"></div>
+  <div class="copper-bar"></div>
+</section>
+
+<!-- ===== SLIDE 7: PLATFORM EXPANSION ===== -->
+<section>
+  <div class="slide-bg" style="background-image: url('images/slide-7.jpg');"></div>
+  <div class="copper-bar"></div>
+</section>
+
+<!-- ===== SLIDE 8: BUILDING BLOCKS (McGill) ===== -->
+<section>
+  <div class="slide-bg" style="background-image: url('images/slide-8.jpg');"></div>
+  <div class="hotspot-layer">
+    <a class="url-badge" href="https://casestudypmo.vercel.app" target="_blank" style="bottom:18px; left:30px;">
+      <span class="dot"></span> casestudypmo.vercel.app — Live McGill Platform
+    </a>
+  </div>
+  <div class="copper-bar"></div>
+</section>
+
+<!-- ===== SLIDE 9: CLOSING / LINKS ===== -->
+<section>
+  <div class="slide-bg" style="background-image: url('images/slide-9.jpg');"></div>
+  <div class="hotspot-layer">
+    <!-- Clickable links overlaid on the final slide -->
+    <a class="url-badge" href="https://bizsimlive.com" target="_blank" style="top:28%; left:6%;">
+      <span class="dot"></span> bizsimlive.com
+    </a>
+    <a class="url-badge" href="https://marketsimlive.com" target="_blank" style="top:35%; left:6%;">
+      <span class="dot"></span> marketsimlive.com
+    </a>
+    <a class="url-badge" href="https://negotiatesim.com" target="_blank" style="top:42%; left:6%;">
+      <span class="dot"></span> negotiatesim.com
+    </a>
+    <a class="url-badge" href="https://philosim.app" target="_blank" style="top:49%; left:6%;">
+      <span class="dot"></span> philosim.app
+    </a>
+    <a class="url-badge" href="https://claudesim.app" target="_blank" style="top:56%; left:6%;">
+      <span class="dot"></span> claudesim.app
+    </a>
+    <a class="url-badge" href="https://pandaprojet.com" target="_blank" style="bottom:14%; left:50%; transform:translateX(-50%);">
+      <span class="dot"></span> pandaprojet.com
+    </a>
+  </div>
+  <div class="copper-bar"></div>
+</section>
+
+</div><!-- /slides -->
+</div><!-- /reveal -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script>
+  // Initialize Reveal.js
+  Reveal.initialize({
+    hash: true,
+    width: 1280,
+    height: 720,
+    margin: 0,
+    minScale: 0.2,
+    maxScale: 2.0,
+    transition: 'fade',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    controls: true,
+    progress: true,
+    center: false,
+    slideNumber: 'c/t',
+    keyboard: true,
+    touch: true,
+    loop: false,
+    autoPlayMedia: true
+  });
+
+  // Hide loader when ready
+  Reveal.on('ready', () => {
+    setTimeout(() => {
+      document.getElementById('loader').classList.add('hidden');
+      setTimeout(() => document.getElementById('loader').remove(), 600);
+    }, 800);
+  });
+
+  // Preload images for smooth transitions
+  const slideImages = [];
+  for (let i = 1; i <= 9; i++) {
+    const img = new Image();
+    img.src = `images/slide-${i}.jpg`;
+    slideImages.push(img);
+  }
+</script>
+</body>
+</html>
